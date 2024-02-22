@@ -1,3 +1,17 @@
 <ng-container *ngIf="displayProgressbar">
   <app-progress-bar></app-progress-bar>
 </ng-container>
+
+<button mat-fab color="primary" (click)="onAddHero()">
+  <mat-icon>add</mat-icon>
+</button>
+
+<div class="heroes-container">
+  <app-hero-card
+    *ngFor="let hero of heroes"
+    [hero]="hero"
+    (delete)="onDeleteHero($event)"
+    (edit)="onEditHero($event)"
+  >
+  </app-hero-card>
+</div>

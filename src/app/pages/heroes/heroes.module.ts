@@ -3,18 +3,18 @@ import { CommonModule } from '@angular/common';
 
 import { HeroesComponent } from './heroes.component';
 import { ProgressBarComponent } from 'src/app/shared/progress-bar/progress-bar.component';
-import { MatCardModule } from '@angular/material/card';
+import { HeroCardComponent } from 'src/app/shared/hero-card/hero-card.component';
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+import { HeroesRoutingModule } from './heroes-routing.module';
 
 @NgModule({
   declarations: [HeroesComponent],
   imports: [
     CommonModule,
     ProgressBarComponent,
-    MatCardModule,
+    HeroCardComponent,
     MatIconModule,
-    MatButtonModule,
+    HeroesRoutingModule,
   ],
 })
 export class HeroesModule {}

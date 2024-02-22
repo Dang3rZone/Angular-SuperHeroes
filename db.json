@@ -1,52 +1,32 @@
 {
   "heroes": [
     {
-      "id": 1,
-      "name": "Batman",
-      "publisher": "DC Comics"
-    },
-    {
-      "id": 2,
-      "name": "Superman",
-      "publisher": "DC Comics"
-    },
-    {
-      "id": 3,
-      "name": "Spider-Man",
-      "publisher": "Marvel Comics"
-    },
-    {
-      "id": 4,
+      "id": "4",
       "name": "Iron Man",
       "publisher": "Marvel Comics"
     },
     {
-      "id": 5,
-      "name": "Wonder Woman",
-      "publisher": "DC Comics"
-    },
-    {
-      "id": 6,
+      "id": "6",
       "name": "Captain America",
       "publisher": "Marvel Comics"
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "Flash",
       "publisher": "DC Comics"
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "Thor",
       "publisher": "Marvel Comics"
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "Green Lantern",
       "publisher": "DC Comics"
     },
     {
-      "id": 10,
+      "id": "10",
       "name": "Black Widow",
       "publisher": "Marvel Comics"
     }
