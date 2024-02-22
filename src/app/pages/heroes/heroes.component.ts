@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { Hero } from 'src/app/core/models/heroes';
 import { HeroesService } from 'src/app/core/services/heroes.service';
+import { NewHeroDialogComponent } from 'src/app/shared/new-hero-dialog/new-hero-dialog.component';
 
 @Component({
   selector: 'app-heroes',
@@ -14,7 +16,7 @@ export class HeroesComponent {
   displayProgressbar: boolean = false;
   heroes: Hero[] = [];
 
-  constructor(private heroesService: HeroesService) {}
+  constructor(private heroesService: HeroesService, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.loadHeroes();
@@ -46,9 +48,31 @@ export class HeroesComponent {
       });
   }
 
-  onEditHero(hero: Hero) {}
+  onEditHero(hero: Hero) {
+    const dialogRef = this.dialog.open(NewHeroDialogComponent, {
+      width: '250px',
+      data: hero,
+    });
 
-  onAddHero() {}
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadHeroes();
+      }
+    });
+  }
+
+  onAddHero() {
+    const dialogRef = this.dialog.open(NewHeroDialogComponent, {
+      width: '250px',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadHeroes();
+      }
+    });
+  }
 
   ngOnDestroy() {
     this.unsubscribe$.next();

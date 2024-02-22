@@ -2,13 +2,13 @@
   "heroes": [
     {
       "id": "4",
-      "name": "Iron Man",
+      "name": "IRON MAN",
       "publisher": "Marvel Comics"
     },
     {
       "id": "6",
-      "name": "Captain America",
-      "publisher": "Marvel Comics"
+      "name": "CAPTAIN AMERICA",
+      "publisher": "Marvel Comicss"
     },
     {
       "id": "7",
@@ -29,6 +29,16 @@
       "id": "10",
       "name": "Black Widow",
       "publisher": "Marvel Comics"
+    },
+    {
+      "id": "26c5",
+      "name": "Wolverine",
+      "publisher": "Marvel"
+    },
+    {
+      "id": "1215",
+      "name": "Eco",
+      "publisher": "Marvel"
     }
   ]
 }

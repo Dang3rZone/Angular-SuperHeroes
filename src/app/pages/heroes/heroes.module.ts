@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { HeroesRoutingModule } from './heroes-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [HeroesComponent],
@@ -19,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
     HeroesRoutingModule,
     ReactiveFormsModule,
+    MatDialogModule,
   ],
 })
 export class HeroesModule {}

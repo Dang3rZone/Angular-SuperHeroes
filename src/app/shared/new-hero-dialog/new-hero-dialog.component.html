@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>{{ data ? "Edit Hero" : "Add New Hero" }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="heroForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" aria-label="hero's name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Publisher</mat-label>
+      <input
+        matInput
+        formControlName="publisher"
+        aria-label="hero's publisher"
+      />
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+      <button mat-button (click)="closeDialog()">Cancel</button>
+      <button
+        mat-button
+        color="primary"
+        [disabled]="!heroForm.valid"
+        type="submit"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>
