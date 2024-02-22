@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Subject } from 'rxjs';
+import { finalize, takeUntil } from 'rxjs/operators';
 import { Hero } from 'src/app/core/models/heroes';
 import { HeroesService } from 'src/app/core/services/heroes.service';
 
@@ -8,8 +10,8 @@ import { HeroesService } from 'src/app/core/services/heroes.service';
   styleUrls: ['./heroes.component.scss'],
 })
 export class HeroesComponent {
+  private unsubscribe$ = new Subject<void>();
   displayProgressbar: boolean = false;
-
   heroes: Hero[] = [];
 
   constructor(private heroesService: HeroesService) {}
@@ -19,16 +21,37 @@ export class HeroesComponent {
   }
 
   loadHeroes() {
+    this.displayProgressbar = true;
     this.heroesService
       .getAllHeroes()
-      .subscribe((heroes) => (this.heroes = heroes));
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        finalize(() => (this.displayProgressbar = false))
+      )
+      .subscribe((heroes) => {
+        this.heroes = heroes;
+      });
   }
 
   onDeleteHero(id: number) {
-    this.heroesService.deleteHero(id).subscribe(() => this.loadHeroes());
+    this.displayProgressbar = true;
+    this.heroesService
+      .deleteHero(id)
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        finalize(() => (this.displayProgressbar = false))
+      )
+      .subscribe(() => {
+        this.loadHeroes();
+      });
   }
 
   onEditHero(hero: Hero) {}
 
   onAddHero() {}
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 }
