@@ -2,21 +2,23 @@
   <app-progress-bar></app-progress-bar>
 </ng-container>
 
-<div class="heroes-container">
-  <div class="hero-card-add-button">
-    <button
-      mat-mini-fab
-      color="accent"
-      aria-label="add new hero"
-      (click)="onAddHero()"
-    >
-      <mat-icon>plus_one</mat-icon>
-    </button>
+<div class="heroes-wrapper">
+  <div class="heroes-container">
+    <div class="hero-card-add-button">
+      <button
+        mat-mini-fab
+        color="accent"
+        aria-label="add new hero"
+        (click)="onAddHero()"
+      >
+        <mat-icon>plus_one</mat-icon>
+      </button>
+    </div>
+    <app-hero-card
+      *ngFor="let hero of heroes"
+      [hero]="hero"
+      (delete)="onDeleteHero($event)"
+      (edit)="onEditHero($event)"
+    ></app-hero-card>
   </div>
-  <app-hero-card
-    *ngFor="let hero of heroes"
-    [hero]="hero"
-    (delete)="onDeleteHero($event)"
-    (edit)="onEditHero($event)"
-  ></app-hero-card>
 </div>

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { Hero } from 'src/app/core/models/heroes';
 import { HeroesService } from 'src/app/core/services/heroes.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
@@ -11,71 +11,118 @@ import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
   templateUrl: './heroes.component.html',
   styleUrls: ['./heroes.component.scss'],
 })
-export class HeroesComponent {
+export class HeroesComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
-  displayProgressbar: boolean = false;
+  displayProgressbar = false;
   heroes: Hero[] = [];
 
-  constructor(private heroesService: HeroesService, public dialog: MatDialog) {}
+  constructor(
+    private heroesService: HeroesService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
-    this.loadHeroes();
+    this.fetchHeroes();
   }
 
-  loadHeroes() {
-    this.displayProgressbar = true;
+  fetchHeroes() {
     this.heroesService
       .getAllHeroes()
       .pipe(
         takeUntil(this.unsubscribe$),
-        finalize(() => (this.displayProgressbar = false))
+        finalize(() => this.hideLoader())
       )
-      .subscribe((heroes) => {
-        this.heroes = heroes;
+      .subscribe({
+        next: (heroes) => (this.heroes = heroes),
+        error: (error) => this.handleError(error),
       });
   }
 
   onDeleteHero(id: number) {
-    this.displayProgressbar = true;
-    this.heroesService
-      .deleteHero(id)
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        finalize(() => (this.displayProgressbar = false))
-      )
-      .subscribe(() => {
-        this.loadHeroes();
-      });
+    this.confirmAction(() => {
+      this.heroesService
+        .deleteHero(id)
+        .pipe(
+          takeUntil(this.unsubscribe$),
+          finalize(() => this.hideLoader())
+        )
+        .subscribe({
+          next: () => this.fetchHeroes(),
+          error: (error) => this.handleError(error),
+        });
+    });
   }
 
   onEditHero(hero: Hero) {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '250px',
-      data: hero,
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.loadHeroes();
-      }
-    });
+    this.openDialog(hero)
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.confirmAction(() => {
+            this.heroesService
+              .updateHero({ ...result, id: hero.id })
+              .pipe(
+                takeUntil(this.unsubscribe$),
+                finalize(() => this.hideLoader())
+              )
+              .subscribe({
+                next: () => this.fetchHeroes(),
+                error: (error) => this.handleError(error),
+              });
+          });
+        }
+      });
   }
 
   onAddHero() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '250px',
-      data: {},
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.loadHeroes();
-      }
-    });
+    this.openDialog()
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.confirmAction(() => {
+            this.heroesService
+              .createNewHero(result)
+              .pipe(
+                takeUntil(this.unsubscribe$),
+                finalize(() => this.hideLoader())
+              )
+              .subscribe({
+                next: () => this.fetchHeroes(),
+                error: (error) => this.handleError(error),
+              });
+          });
+        }
+      });
   }
 
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  private showLoader() {
+    this.displayProgressbar = true;
+  }
+
+  private hideLoader() {
+    this.displayProgressbar = false;
+  }
+
+  private handleError(error: any) {
+    this.hideLoader();
+    console.error('An error occurred', error);
+    // Aquí podrías agregar manejo de errores más avanzado como mostrar notificaciones al usuario
+  }
+
+  private openDialog(hero?: Hero) {
+    return this.dialog.open(DialogComponent, {
+      width: '250px',
+      data: { hero },
+    });
+  }
+
+  private confirmAction(action: () => void) {
+    this.showLoader();
+    action();
   }
 }

@@ -1,4 +1,5 @@
-import { HeroesService } from 'src/app/core/services/heroes.service';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { Component, Inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -7,17 +8,17 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
 import {
+  MatDialogRef,
   MAT_DIALOG_DATA,
   MatDialogModule,
-  MatDialogRef,
 } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { Hero } from '../../core/models/heroes';
+import { MatButtonModule } from '@angular/material/button';
+
+export interface DialogData {
+  hero?: Hero;
+}
 
 @Component({
   selector: 'app-dialog',
@@ -34,67 +35,45 @@ import { Hero } from '../../core/models/heroes';
   ],
 })
 export class DialogComponent implements OnInit {
-  private unsubscribe$ = new Subject<void>();
-
   heroForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    private heroesService: HeroesService,
     public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data?: Hero
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
     this.heroForm = this.fb.group({
-      name: ['', [Validators.required]],
-      publisher: ['', [Validators.required]],
+      name: ['', Validators.required],
+      publisher: ['', Validators.required],
     });
   }
 
-  ngOnInit() {
-    if (this.data?.name) {
-      this.heroForm.patchValue({
-        name: this.data.name.toUpperCase(),
-        publisher: this.data.publisher,
-      });
+  ngOnInit(): void {
+    if (this.data.hero) {
+      const { name, publisher } = this.data.hero;
+      this.heroForm.setValue({ name, publisher });
     }
   }
-  private capitalizeFirstLetter(text: string): string {
-    return text.charAt(0).toUpperCase() + text.slice(1);
+
+  get name() {
+    return this.heroForm.get('name');
+  }
+
+  get publisher() {
+    return this.heroForm.get('publisher');
   }
 
   onSubmit(): void {
     if (this.heroForm.valid) {
-      const heroData = this.heroForm.value;
-      heroData.name =
-        heroData.name.charAt(0).toUpperCase() + heroData.name.slice(1);
-
-      heroData.publisher =
-        heroData.publisher.charAt(0).toUpperCase() +
-        heroData.publisher.slice(1);
-      if (this.data && this.data.id) {
-        this.heroesService
-          .updateHero({ ...this.data, ...heroData })
-          .pipe(takeUntil(this.unsubscribe$))
-          .subscribe(() => {
-            this.dialogRef.close(true);
-          });
-      } else {
-        this.heroesService
-          .createNewHero(heroData)
-          .pipe(takeUntil(this.unsubscribe$))
-          .subscribe(() => {
-            this.dialogRef.close(true);
-          });
-      }
+      const heroData: Hero = {
+        ...this.heroForm.value,
+        id: this.data.hero?.id,
+      };
+      this.dialogRef.close(heroData);
     }
   }
 
   closeDialog(): void {
     this.dialogRef.close();
-  }
-
-  ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 }

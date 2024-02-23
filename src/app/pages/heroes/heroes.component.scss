@@ -1,17 +1,21 @@
-.heroes-container {
+.heroes-wrapper {
   display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
   justify-content: center;
-  align-items: center;
+}
 
-  //   .hero-card-add-button {
-  //     display: flex;
-  //     justify-content: center;
-  //     align-items: center;
-  //     width: 120px;
-  //     button.mat-fab {
-  //       margin: 0;
-  //     }
-  //   }
+.heroes-container {
+  margin-top: 6rem;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  justify-items: center;
+  align-items: start;
+  max-width: 75rem;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .heroes-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

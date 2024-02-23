@@ -1,0 +1,27 @@
+.mat-card {
+  width: 12.5rem;
+  height: 18.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.uniform-card {
+  width: 14rem;
+  height: 8.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+}
+
+@media (max-width: 37.5rem) {
+  .mat-card,
+  .uniform-card {
+    width: 100%;
+    height: auto;
+  }
+}
