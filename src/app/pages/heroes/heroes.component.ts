@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { Hero } from 'src/app/core/models/heroes';
 import { HeroesService } from 'src/app/core/services/heroes.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
+import { DeleteDialogComponent } from 'src/app/shared/delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-heroes',
@@ -39,17 +40,24 @@ export class HeroesComponent implements OnInit, OnDestroy {
   }
 
   onDeleteHero(id: number) {
-    this.confirmAction(() => {
-      this.heroesService
-        .deleteHero(id)
-        .pipe(
-          takeUntil(this.unsubscribe$),
-          finalize(() => this.hideLoader())
-        )
-        .subscribe({
-          next: () => this.fetchHeroes(),
-          error: (error) => this.handleError(error),
-        });
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (confirmed) {
+        this.showLoader();
+        this.heroesService
+          .deleteHero(id)
+          .pipe(
+            takeUntil(this.unsubscribe$),
+            finalize(() => this.hideLoader())
+          )
+          .subscribe({
+            next: () => this.fetchHeroes(),
+            error: (error) => this.handleError(error),
+          });
+      }
     });
   }
 
