@@ -15,7 +15,7 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Subject, firstValueFrom } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Hero } from '../../core/models/heroes';
 
@@ -62,24 +62,29 @@ export class DialogComponent implements OnInit {
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
 
-  async onSubmit(): Promise<void> {
+  onSubmit(): void {
     if (this.heroForm.valid) {
-      const heroData = { ...this.heroForm.value };
+      const heroData = this.heroForm.value;
+      heroData.name =
+        heroData.name.charAt(0).toUpperCase() + heroData.name.slice(1);
 
-      heroData.name = this.capitalizeFirstLetter(heroData.name);
-      heroData.publisher = this.capitalizeFirstLetter(heroData.publisher);
-
-      try {
-        if (this.data && this.data.id) {
-          await firstValueFrom(
-            this.heroesService.updateHero({ ...this.data, ...heroData })
-          );
-        } else {
-          await firstValueFrom(this.heroesService.createNewHero(heroData));
-        }
-        this.dialogRef.close(true);
-      } catch (error) {
-        console.error(error);
+      heroData.publisher =
+        heroData.publisher.charAt(0).toUpperCase() +
+        heroData.publisher.slice(1);
+      if (this.data && this.data.id) {
+        this.heroesService
+          .updateHero({ ...this.data, ...heroData })
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(() => {
+            this.dialogRef.close(true);
+          });
+      } else {
+        this.heroesService
+          .createNewHero(heroData)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(() => {
+            this.dialogRef.close(true);
+          });
       }
     }
   }
