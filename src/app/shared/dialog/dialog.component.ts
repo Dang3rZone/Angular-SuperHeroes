@@ -67,6 +67,7 @@ export class DialogComponent implements OnInit {
     if (this.heroForm.valid) {
       const heroData: Hero = {
         ...this.heroForm.value,
+        name: this.heroForm.value.name.toUpperCase(),
         id: this.data.hero?.id,
       };
       this.dialogRef.close(heroData);
