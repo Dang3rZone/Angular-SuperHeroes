@@ -12,33 +12,38 @@
     },
     {
       "id": "7",
-      "name": "Flash",
+      "name": "FLASH",
       "publisher": "DC Comics"
     },
     {
       "id": "8",
-      "name": "Thor",
+      "name": "THOR",
       "publisher": "Marvel Comics"
     },
     {
       "id": "9",
-      "name": "Green Lantern",
+      "name": "GREEN LANTERN",
       "publisher": "DC Comics"
     },
     {
       "id": "10",
-      "name": "Black Widow",
+      "name": "BLACK WIDOW",
       "publisher": "Marvel Comics"
     },
     {
       "id": "26c5",
-      "name": "Wolverine",
+      "name": "WOLVERINE",
       "publisher": "Marvel"
     },
     {
       "id": "1215",
-      "name": "Eco",
+      "name": "ECO",
       "publisher": "Marvel"
+    },
+    {
+      "id": "772b",
+      "name": "MAGNETO",
+      "publisher": "Marvel Comics"
     }
   ]
 }

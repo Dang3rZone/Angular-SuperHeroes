@@ -15,14 +15,14 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Subject } from 'rxjs';
+import { Subject, firstValueFrom } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Hero } from '../../core/models/heroes';
 
 @Component({
-  selector: 'app-new-hero-dialog',
-  templateUrl: './new-hero-dialog.component.html',
-  styleUrls: ['./new-hero-dialog.component.scss'],
+  selector: 'app-dialog',
+  templateUrl: './dialog.component.html',
+  styleUrls: ['./dialog.component.scss'],
   standalone: true,
   imports: [
     MatDialogModule,
@@ -33,7 +33,7 @@ import { Hero } from '../../core/models/heroes';
     ReactiveFormsModule,
   ],
 })
-export class NewHeroDialogComponent implements OnInit {
+export class DialogComponent implements OnInit {
   private unsubscribe$ = new Subject<void>();
 
   heroForm: FormGroup;
@@ -41,7 +41,7 @@ export class NewHeroDialogComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private heroesService: HeroesService,
-    public dialogRef: MatDialogRef<NewHeroDialogComponent>,
+    public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data?: Hero
   ) {
     this.heroForm = this.fb.group({
@@ -58,30 +58,28 @@ export class NewHeroDialogComponent implements OnInit {
       });
     }
   }
+  private capitalizeFirstLetter(text: string): string {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (this.heroForm.valid) {
-      const heroData = this.heroForm.value;
-      heroData.name =
-        heroData.name.charAt(0).toUpperCase() + heroData.name.slice(1);
+      const heroData = { ...this.heroForm.value };
 
-      heroData.publisher =
-        heroData.publisher.charAt(0).toUpperCase() +
-        heroData.publisher.slice(1);
-      if (this.data && this.data.id) {
-        this.heroesService
-          .updateHero({ ...this.data, ...heroData })
-          .pipe(takeUntil(this.unsubscribe$))
-          .subscribe(() => {
-            this.dialogRef.close(true);
-          });
-      } else {
-        this.heroesService
-          .createNewHero(heroData)
-          .pipe(takeUntil(this.unsubscribe$))
-          .subscribe(() => {
-            this.dialogRef.close(true);
-          });
+      heroData.name = this.capitalizeFirstLetter(heroData.name);
+      heroData.publisher = this.capitalizeFirstLetter(heroData.publisher);
+
+      try {
+        if (this.data && this.data.id) {
+          await firstValueFrom(
+            this.heroesService.updateHero({ ...this.data, ...heroData })
+          );
+        } else {
+          await firstValueFrom(this.heroesService.createNewHero(heroData));
+        }
+        this.dialogRef.close(true);
+      } catch (error) {
+        console.error(error);
       }
     }
   }

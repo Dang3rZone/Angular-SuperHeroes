@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { Hero } from 'src/app/core/models/heroes';
 import { HeroesService } from 'src/app/core/services/heroes.service';
-import { NewHeroDialogComponent } from 'src/app/shared/new-hero-dialog/new-hero-dialog.component';
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 
 @Component({
   selector: 'app-heroes',
@@ -49,7 +49,7 @@ export class HeroesComponent {
   }
 
   onEditHero(hero: Hero) {
-    const dialogRef = this.dialog.open(NewHeroDialogComponent, {
+    const dialogRef = this.dialog.open(DialogComponent, {
       width: '250px',
       data: hero,
     });
@@ -62,7 +62,7 @@ export class HeroesComponent {
   }
 
   onAddHero() {
-    const dialogRef = this.dialog.open(NewHeroDialogComponent, {
+    const dialogRef = this.dialog.open(DialogComponent, {
       width: '250px',
       data: {},
     });

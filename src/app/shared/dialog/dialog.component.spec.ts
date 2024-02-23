@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewHeroDialogComponent } from './new-hero-dialog.component';
+import { NewHeroDialogComponent } from './dialog.component';
 
 describe('NewHeroDialogComponent', () => {
   let component: NewHeroDialogComponent;
@@ -8,7 +8,7 @@ describe('NewHeroDialogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [NewHeroDialogComponent]
+      declarations: [NewHeroDialogComponent],
     });
     fixture = TestBed.createComponent(NewHeroDialogComponent);
     component = fixture.componentInstance;
