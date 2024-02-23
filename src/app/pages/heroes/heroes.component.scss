@@ -10,8 +10,15 @@
   gap: 1rem;
   justify-items: center;
   align-items: start;
-  max-width: 75rem;
-  width: 100%;
+  max-width: 100%;
+}
+
+.hero-card-add-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: span 1;
+  height: 100%;
 }
 
 @media (max-width: 768px) {

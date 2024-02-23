@@ -111,7 +111,6 @@ export class HeroesComponent implements OnInit, OnDestroy {
   private handleError(error: any) {
     this.hideLoader();
     console.error('An error occurred', error);
-    // Aquí podrías agregar manejo de errores más avanzado como mostrar notificaciones al usuario
   }
 
   private openDialog(hero?: Hero) {
