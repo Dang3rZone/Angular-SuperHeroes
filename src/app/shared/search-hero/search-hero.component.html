@@ -3,7 +3,7 @@
     <mat-label>Buscar héroe...</mat-label>
     <input
       matInput
-      (input)="onSearchChange($event)"
+      [formControl]="searchControl"
       placeholder="Ingresa el nombre del héroe"
     />
     <mat-icon matSuffix>search</mat-icon>

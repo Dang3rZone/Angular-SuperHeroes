@@ -14,6 +14,7 @@ import { DeleteDialogComponent } from 'src/app/shared/delete-dialog/delete-dialo
 })
 export class HeroesComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
+
   displayProgressbar = false;
   heroes: Hero[] = [];
   filteredHeroes: Hero[] = [];
@@ -45,18 +46,24 @@ export class HeroesComponent implements OnInit, OnDestroy {
   }
 
   filterHeroes(searchTerm: string) {
-    if (!searchTerm) {
-      this.filteredHeroes = [...this.heroes];
-    } else {
-      this.filteredHeroes = this.heroes
-        .filter((hero) =>
-          hero.name.toLowerCase().startsWith(searchTerm.toLowerCase())
-        )
-        .map((hero) => ({
-          ...hero,
-          name: hero.name.charAt(0).toUpperCase() + hero.name.slice(1),
-        }));
-    }
+    this.showLoader();
+
+    setTimeout(() => {
+      if (!searchTerm) {
+        this.filteredHeroes = [...this.heroes];
+      } else {
+        this.filteredHeroes = this.heroes
+          .filter((hero) =>
+            hero.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+          )
+          .map((hero) => ({
+            ...hero,
+            name: hero.name.charAt(0).toUpperCase() + hero.name.slice(1),
+          }));
+      }
+
+      this.hideLoader();
+    }, 300);
   }
 
   onDeleteHero(id: number) {
