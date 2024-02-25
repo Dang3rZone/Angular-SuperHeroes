@@ -7,7 +7,7 @@
     },
     {
       "name": "CAPTAIN AMERICA",
-      "publisher": "Marvel Comicss",
+      "publisher": "Marvel Comics",
       "id": "6"
     },
     {
@@ -36,14 +36,109 @@
       "id": "26c5"
     },
     {
-      "id": "772b",
       "name": "MAGNETO",
+      "publisher": "Marvel Comics",
+      "id": "772b"
+    },
+    {
+      "id": "8445",
+      "name": "HULK",
       "publisher": "Marvel Comics"
     },
     {
-      "id": "9feb",
-      "name": "ANT MAN",
+      "id": "11",
+      "name": "SUPERMAN",
+      "publisher": "DC Comics"
+    },
+    {
+      "id": "12",
+      "name": "BATMAN",
+      "publisher": "DC Comics"
+    },
+    {
+      "id": "13",
+      "name": "WONDER WOMAN",
+      "publisher": "DC Comics"
+    },
+    {
+      "id": "14",
+      "name": "SPIDER-MAN",
       "publisher": "Marvel Comics"
+    },
+    {
+      "id": "15",
+      "name": "DEADPOOL",
+      "publisher": "Marvel Comics"
+    },
+    {
+      "id": "16",
+      "name": "CYBORG",
+      "publisher": "DC Comics"
+    },
+    {
+      "name": "AQUAMAN",
+      "publisher": "DC Comics",
+      "id": "17"
+    },
+    {
+      "id": "18",
+      "name": "HAWKEYE",
+      "publisher": "Marvel Comics"
+    },
+    {
+      "id": "19",
+      "name": "BLACK PANTHER",
+      "publisher": "Marvel Comics"
+    },
+    {
+      "id": "20",
+      "name": "NIGHTWING",
+      "publisher": "DC Comics"
+    },
+    {
+      "id": "21",
+      "name": "DAREDEVIL",
+      "publisher": "Marvel Comics"
+    },
+    {
+      "id": "22",
+      "name": "THE FLASH",
+      "publisher": "DC Comics"
+    },
+    {
+      "id": "23",
+      "name": "GREEN ARROW",
+      "publisher": "DC Comics"
+    },
+    {
+      "id": "24",
+      "name": "DOCTOR STRANGE",
+      "publisher": "Marvel Comics"
+    },
+    {
+      "id": "25",
+      "name": "ANT-MAN",
+      "publisher": "Marvel Comics"
+    },
+    {
+      "id": "26",
+      "name": "ROBIN",
+      "publisher": "DC Comics"
+    },
+    {
+      "id": "27",
+      "name": "SILVER SURFER",
+      "publisher": "Marvel Comics"
+    },
+    {
+      "id": "28",
+      "name": "CATWOMAN",
+      "publisher": "DC Comics"
+    },
+    {
+      "name": "IRON FIST",
+      "publisher": "Marvel Comics",
+      "id": "29"
     }
   ]
 }

@@ -4,7 +4,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -30,7 +29,7 @@ export interface DialogData {
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule,
+
     ReactiveFormsModule,
   ],
 })
