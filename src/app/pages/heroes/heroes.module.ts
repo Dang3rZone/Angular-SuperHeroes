@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HeroesComponent } from './heroes.component';
@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SearchHeroComponent } from 'src/app/shared/search-hero/search-hero.component';
+import { ErrorHandlerService } from 'src/app/core/services/errorhandler.service';
 
 @NgModule({
   declarations: [HeroesComponent],
@@ -23,6 +24,12 @@ import { SearchHeroComponent } from 'src/app/shared/search-hero/search-hero.comp
     ReactiveFormsModule,
     MatDialogModule,
     SearchHeroComponent,
+  ],
+  providers: [
+    {
+      provide: ErrorHandler,
+      useClass: ErrorHandlerService,
+    },
   ],
 })
 export class HeroesModule {}

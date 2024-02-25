@@ -6,6 +6,7 @@ import { Hero } from 'src/app/core/models/heroes';
 import { HeroesService } from 'src/app/core/services/heroes.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { DeleteDialogComponent } from 'src/app/shared/delete-dialog/delete-dialog.component';
+import { ErrorHandlerService } from 'src/app/core/services/errorhandler.service';
 
 @Component({
   selector: 'app-heroes',
@@ -21,7 +22,8 @@ export class HeroesComponent implements OnInit, OnDestroy {
 
   constructor(
     private heroesService: HeroesService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private errorHandlerService: ErrorHandlerService
   ) {}
 
   ngOnInit() {
@@ -41,7 +43,7 @@ export class HeroesComponent implements OnInit, OnDestroy {
           this.heroes = heroes;
           this.filteredHeroes = [...this.heroes];
         },
-        error: (error) => this.handleError(error),
+        error: (error) => this.errorHandlerService.handleError(error),
       });
   }
 
@@ -82,7 +84,7 @@ export class HeroesComponent implements OnInit, OnDestroy {
           )
           .subscribe({
             next: () => this.fetchHeroes(),
-            error: (error) => this.handleError(error),
+            error: (error) => this.errorHandlerService.handleError(error),
           });
       }
     });
@@ -102,7 +104,7 @@ export class HeroesComponent implements OnInit, OnDestroy {
               )
               .subscribe({
                 next: () => this.fetchHeroes(),
-                error: (error) => this.handleError(error),
+                error: (error) => this.errorHandlerService.handleError(error),
               });
           });
         }
@@ -123,7 +125,7 @@ export class HeroesComponent implements OnInit, OnDestroy {
               )
               .subscribe({
                 next: () => this.fetchHeroes(),
-                error: (error) => this.handleError(error),
+                error: (error) => this.errorHandlerService.handleError(error),
               });
           });
         }
