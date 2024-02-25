@@ -9,6 +9,7 @@ import { HeroesRoutingModule } from './heroes-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { SearchHeroComponent } from 'src/app/shared/search-hero/search-hero.component';
 
 @NgModule({
   declarations: [HeroesComponent],
@@ -21,6 +22,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     HeroesRoutingModule,
     ReactiveFormsModule,
     MatDialogModule,
+    SearchHeroComponent,
   ],
 })
 export class HeroesModule {}

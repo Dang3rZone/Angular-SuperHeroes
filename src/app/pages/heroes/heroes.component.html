@@ -2,6 +2,8 @@
   <app-progress-bar></app-progress-bar>
 </ng-container>
 
+<app-search-hero (search)="filterHeroes($event)"></app-search-hero>
+
 <div class="heroes-wrapper">
   <div class="heroes-container">
     <div class="hero-card-add-button">
@@ -15,7 +17,7 @@
       </button>
     </div>
     <app-hero-card
-      *ngFor="let hero of heroes"
+      *ngFor="let hero of filteredHeroes"
       [hero]="hero"
       (delete)="onDeleteHero($event)"
       (edit)="onEditHero($event)"

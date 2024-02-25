@@ -1,0 +1,11 @@
+<div class="search-container">
+  <mat-form-field appearance="fill">
+    <mat-label>Buscar héroe...</mat-label>
+    <input
+      matInput
+      (input)="onSearchChange($event)"
+      placeholder="Ingresa el nombre del héroe"
+    />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+</div>

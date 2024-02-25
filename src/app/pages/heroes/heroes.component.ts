@@ -16,6 +16,7 @@ export class HeroesComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
   displayProgressbar = false;
   heroes: Hero[] = [];
+  filteredHeroes: Hero[] = [];
 
   constructor(
     private heroesService: HeroesService,
@@ -27,6 +28,7 @@ export class HeroesComponent implements OnInit, OnDestroy {
   }
 
   fetchHeroes() {
+    this.showLoader();
     this.heroesService
       .getAllHeroes()
       .pipe(
@@ -34,9 +36,27 @@ export class HeroesComponent implements OnInit, OnDestroy {
         finalize(() => this.hideLoader())
       )
       .subscribe({
-        next: (heroes) => (this.heroes = heroes),
+        next: (heroes) => {
+          this.heroes = heroes;
+          this.filteredHeroes = [...this.heroes];
+        },
         error: (error) => this.handleError(error),
       });
+  }
+
+  filterHeroes(searchTerm: string) {
+    if (!searchTerm) {
+      this.filteredHeroes = [...this.heroes];
+    } else {
+      this.filteredHeroes = this.heroes
+        .filter((hero) =>
+          hero.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+        )
+        .map((hero) => ({
+          ...hero,
+          name: hero.name.charAt(0).toUpperCase() + hero.name.slice(1),
+        }));
+    }
   }
 
   onDeleteHero(id: number) {

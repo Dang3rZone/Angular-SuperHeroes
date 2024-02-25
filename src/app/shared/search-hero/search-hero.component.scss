@@ -1,0 +1,10 @@
+/* search-hero.component.scss */
+.search-container mat-form-field {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .search-container mat-form-field {
+    width: 500px;
+  }
+}
