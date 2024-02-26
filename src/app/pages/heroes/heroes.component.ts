@@ -49,23 +49,19 @@ export class HeroesComponent implements OnInit, OnDestroy {
 
   filterHeroes(searchTerm: string) {
     this.showLoader();
-
-    setTimeout(() => {
-      if (!searchTerm) {
-        this.filteredHeroes = [...this.heroes];
-      } else {
-        this.filteredHeroes = this.heroes
-          .filter((hero) =>
-            hero.name.toLowerCase().startsWith(searchTerm.toLowerCase())
-          )
-          .map((hero) => ({
-            ...hero,
-            name: hero.name.charAt(0).toUpperCase() + hero.name.slice(1),
-          }));
-      }
-
-      this.hideLoader();
-    }, 300);
+    if (!searchTerm) {
+      this.filteredHeroes = [...this.heroes];
+    } else {
+      this.filteredHeroes = this.heroes
+        .filter((hero) =>
+          hero.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+        )
+        .map((hero) => ({
+          ...hero,
+          name: hero.name.charAt(0).toUpperCase() + hero.name.slice(1),
+        }));
+    }
+    this.hideLoader();
   }
 
   onDeleteHero(id: number) {
@@ -143,11 +139,6 @@ export class HeroesComponent implements OnInit, OnDestroy {
 
   private hideLoader() {
     this.displayProgressbar = false;
-  }
-
-  private handleError(error: any) {
-    this.hideLoader();
-    console.error('An error occurred', error);
   }
 
   private openDialog(hero?: Hero) {

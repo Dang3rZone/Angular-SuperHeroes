@@ -26,8 +26,8 @@ describe('HeroesService', () => {
 
   it('getAllHeroes() should return heroes', () => {
     const dummyHeroes: Hero[] = [
-      { id: '1', name: 'Hero 1', publisher: 'Publisher 1' },
-      { id: '2', name: 'Hero 2', publisher: 'Publisher 2' },
+      { id: 1, name: 'Hero 1', publisher: 'Publisher 1' },
+      { id: 2, name: 'Hero 2', publisher: 'Publisher 2' },
     ];
 
     service.getAllHeroes().subscribe((heroes) => {
@@ -42,7 +42,7 @@ describe('HeroesService', () => {
 
   it('getHeroById() should return a hero', () => {
     const dummyHero: Hero = {
-      id: '1',
+      id: 1,
       name: 'Hero Name',
       publisher: 'Hero Publisher',
     };
@@ -58,7 +58,7 @@ describe('HeroesService', () => {
 
   it('createNewHero() should post and return the new hero', () => {
     const newHero: Hero = {
-      id: '3',
+      id: 3,
       name: 'New Hero',
       publisher: 'New Publisher',
     };
@@ -75,7 +75,7 @@ describe('HeroesService', () => {
 
   it('getHeroesByName() should return heroes by name', () => {
     const dummyHeroes: Hero[] = [
-      { id: '2', name: 'Test Hero', publisher: 'Publisher 1' },
+      { id: 2, name: 'Test Hero', publisher: 'Publisher 1' },
     ];
 
     service.getHeroesByName('Test Hero').subscribe((heroes) => {
@@ -90,7 +90,7 @@ describe('HeroesService', () => {
 
   it('updateHero() should PUT and return the updated hero', () => {
     const updatedHero: Hero = {
-      id: '1',
+      id: 1,
       name: 'Updated Hero Name',
       publisher: 'Updated Publisher',
     };
