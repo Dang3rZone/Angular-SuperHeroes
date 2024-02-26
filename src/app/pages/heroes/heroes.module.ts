@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SearchHeroComponent } from 'src/app/shared/search-hero/search-hero.component';
 import { ErrorHandlerService } from 'src/app/core/services/errorhandler.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [HeroesComponent],
@@ -24,6 +25,7 @@ import { ErrorHandlerService } from 'src/app/core/services/errorhandler.service'
     ReactiveFormsModule,
     MatDialogModule,
     SearchHeroComponent,
+    MatSnackBarModule,
   ],
   providers: [
     {

@@ -131,14 +131,14 @@
       "publisher": "Marvel Comics"
     },
     {
-      "id": "28",
       "name": "CATWOMAN",
-      "publisher": "DC Comics"
+      "publisher": "DC Comics",
+      "id": "28"
     },
     {
-      "name": "IRON FIST",
-      "publisher": "Marvel Comics",
-      "id": "29"
+      "id": "916f",
+      "name": "THE THING",
+      "publisher": "Marvel Comics"
     }
   ]
 }

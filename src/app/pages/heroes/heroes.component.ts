@@ -7,6 +7,7 @@ import { HeroesService } from 'src/app/core/services/heroes.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { DeleteDialogComponent } from 'src/app/shared/delete-dialog/delete-dialog.component';
 import { ErrorHandlerService } from 'src/app/core/services/errorhandler.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-heroes',
@@ -23,7 +24,8 @@ export class HeroesComponent implements OnInit, OnDestroy {
   constructor(
     private heroesService: HeroesService,
     private dialog: MatDialog,
-    private errorHandlerService: ErrorHandlerService
+    private errorHandlerService: ErrorHandlerService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -79,8 +81,14 @@ export class HeroesComponent implements OnInit, OnDestroy {
             finalize(() => this.hideLoader())
           )
           .subscribe({
-            next: () => this.fetchHeroes(),
-            error: (error) => this.errorHandlerService.handleError(error),
+            next: () => {
+              this.fetchHeroes(),
+                this.showNotification('Héroe eliminado exitosamente');
+            },
+            error: (error) => {
+              this.errorHandlerService.handleError(error),
+                this.showNotification('Error al eliminar el héroe');
+            },
           });
       }
     });
@@ -99,8 +107,14 @@ export class HeroesComponent implements OnInit, OnDestroy {
                 finalize(() => this.hideLoader())
               )
               .subscribe({
-                next: () => this.fetchHeroes(),
-                error: (error) => this.errorHandlerService.handleError(error),
+                next: () => {
+                  this.fetchHeroes(),
+                    this.showNotification('Héroe se edito exitosamente');
+                },
+                error: (error) => {
+                  this.errorHandlerService.handleError(error),
+                    this.showNotification('Error al editar el héroe');
+                },
               });
           });
         }
@@ -120,8 +134,14 @@ export class HeroesComponent implements OnInit, OnDestroy {
                 finalize(() => this.hideLoader())
               )
               .subscribe({
-                next: () => this.fetchHeroes(),
-                error: (error) => this.errorHandlerService.handleError(error),
+                next: () => {
+                  this.fetchHeroes(),
+                    this.showNotification('Héroe se creo exitosamente');
+                },
+                error: (error) => {
+                  this.errorHandlerService.handleError(error),
+                    this.showNotification('Error al crear el héroe');
+                },
               });
           });
         }
@@ -151,5 +171,11 @@ export class HeroesComponent implements OnInit, OnDestroy {
   private confirmAction(action: () => void) {
     this.showLoader();
     action();
+  }
+
+  private showNotification(message: string) {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 3000, // Cierra después de 3000ms
+    });
   }
 }
